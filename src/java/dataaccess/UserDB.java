@@ -3,6 +3,7 @@ package dataaccess;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import models.Role;
 import models.User;
 
 
@@ -35,6 +36,7 @@ public List<User> getAll() throws Exception {
         EntityTransaction trans = em.getTransaction();
         
         try {
+            
             trans.begin();
             em.persist(user);
             em.merge(user);
@@ -64,11 +66,14 @@ public List<User> getAll() throws Exception {
     public void delete(User user) throws Exception {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
         EntityTransaction trans = em.getTransaction();
+    
         
         try {
+            Role role = user.getRole();
+            role.getUserList().remove(user);
             trans.begin();
             em.remove(em.merge(user));
-            em.merge(user);
+            em.merge(role);
             trans.commit();
         } catch (Exception ex) {
             trans.rollback();
@@ -76,6 +81,8 @@ public List<User> getAll() throws Exception {
             em.close();
         }
     }
+
+   
 
     
 }

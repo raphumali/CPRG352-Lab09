@@ -5,7 +5,6 @@ import javax.persistence.EntityManager;
 
 import models.Role;
 
-
 public class RoleDB {
 
 public List<Role> getAll() throws Exception {
@@ -18,5 +17,21 @@ public List<Role> getAll() throws Exception {
             em.close();
         }
     }
+
+public Role get(int roleID) throws Exception {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        
+        try {
+            Role role = em.find(Role.class, roleID);
+            return role;
+        } finally { 
+            em.close();
+        }
+    }
+
+
+  
+
+    
 
 }

@@ -20,12 +20,13 @@ public class UserServlet extends HttpServlet {
         
         String action = request.getParameter("action");
         String email = request.getParameter("email");
+     
 
         // Perform methods based on the action
         try {
             switch (action) {
                 case "edit":
-                    User user = us.get(email);
+                     User user = us.get(email);        
                     request.setAttribute("editUser", user);
                     break;
                 case "delete":
@@ -88,7 +89,7 @@ public class UserServlet extends HttpServlet {
         try {
             switch (action) {
                 case "add":
-                    us.insert(email, active, firstname, lastname, password, role);
+                    us.insert(email, active, firstname, lastname, password, roleID);
                     break;
                 case "update":
                     us.update(email, active, firstname, lastname, password, role);
